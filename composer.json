@@ -1,0 +1,23 @@
+{
+    "name": "lovecoding/simple-twig-asset",
+    "description": "A simple twig asset extension for Slim 3.x",
+    "type": "library",
+    "require": {
+        "php": "^7.0",
+        "psr/http-message": "^1.0",
+        "symfony/asset": "^4.2",
+        "twig/twig": "^2.0|^3.4"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "thangl3",
+            "email": "lethethangdn@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "LoveCoding\\TwigAsset\\": "src"
+        }
+    }
+}
