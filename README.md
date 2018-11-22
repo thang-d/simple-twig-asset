@@ -7,7 +7,7 @@ This is a simple twig asset extension for Slim 3.x helper manage your resource i
 Via [Composer](https://getcomposer.org/)
 
 ```bash
-$ composer require lovecoding/twig-asset
+$ composer require lovecoding/simple-twig-asset
 ```
 
 Requires Slim Framework 3.x and PHP 7.0.0 or newer.
