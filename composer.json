@@ -1,5 +1,5 @@
 {
-    "name": "lovecoding/simple-twig-asset",
+    "name": "lovecoding/twig-asset",
     "description": "A simple twig asset extension for Slim 3.x",
     "type": "library",
     "require": {
