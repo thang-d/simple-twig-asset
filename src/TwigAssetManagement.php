@@ -1,30 +1,55 @@
 <?php
+/**
+ * Please visit here to read more about feature of this class
+ * Link: https://symfony.com/doc/current/components/asset.html
+ * 
+ * Author: Thang Le
+ * Email: lethethangdn@gmail.com
+ */
 namespace LoveCoding\TwigAsset;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-
-use Symfony\Component\Asset\{
-    PackageInterface,
-    VersionStrategyInterface,
-    Package,
-    PathPackage,
-    UrlPackage,
-    Packages
-};
-use Symfony\Component\Asset\VersionStrategy\{
-    EmptyVersionStrategy,
-    StaticVersionStrategy,
-    JsonManifestVersionStrategy
-};
+use Symfony\Component\Asset\PackageInterface;
+use Symfony\Component\Asset\VersionStrategyInterface;
+use Symfony\Component\Asset\Package;
+use Symfony\Component\Asset\PathPackage;
+use Symfony\Component\Asset\UrlPackage;
+use Symfony\Component\Asset\Packages;
+use Symfony\Component\Asset\EmptyVersionStrategy;
+use Symfony\Component\Asset\StaticVersionStrategy;
+use Symfony\Component\Asset\JsonManifestVersionStrategy;
 
 class TwigAssetManagement
 {
+    /**
+     * Default strategy for assets resource
+     * EmptyVersionStrategy or StaticVersionStrategy or JsonManifestVersionStrategy
+     *
+     * @var VersionStrategyInterface
+     */
     private $currentStrategy;
 
+    /**
+     * Load default packages, it had been provied by default
+     * with once for UrlPackage, once PathPackage, once PathJsonManifest and once for PathStaticVersions
+     *
+     * @var PackageInterface
+     */
     private $defaultPackage;
+
+    /**
+     * Contains all package had been added by default and add more by user
+     *
+     * @var array
+     */
     private $namedPackages = [];
 
+    /**
+     * Default settings
+     *
+     * @var array
+     */
     private $settings = [
         'version' => '',
         'version_format' => '%s?v=%s',
@@ -35,9 +60,9 @@ class TwigAssetManagement
         'external_url' => ''
     ];
 
-    public function __construct(array $settings = [])
+    public function __construct(array $userSettings = [])
     {
-        $this->settings = array_merge($this->settings, $settings);
+        $this->settings = array_merge($this->settings, $userSettings);
     }
 
     public function getAssetExtension() : AbstractExtension
@@ -55,19 +80,45 @@ class TwigAssetManagement
      * @param PackageInterface $package
      * @return void
      */
-    public function addPackage(string $name, PackageInterface $package) : void
+    private function addPackage(string $name, PackageInterface $package) : void
     {
         $this->namedPackages[$name] = $package;
     }
 
+    /**
+     * Allow add more path static to asset resources
+     *
+     * @param string $name
+     * @param string $path
+     * @return void
+     */
     public function addPath(string $name, string $path) : void
     {
         $this->addPackage($name, new PathPackage($path, $this->getCurrentStrategy()));
     }
 
+    /**
+     * Allow add more url
+     *
+     * @param string $name
+     * @param string $path
+     * @return void
+     */
     public function addUrl(string $name, string $path) : void
     {
         $this->addPackage($name, new UrlPackage($path, $this->getCurrentStrategy()));
+    }
+
+    /**
+     * Allow add more manifest assets to asset twig
+     *
+     * @param string $name
+     * @param string $jsonManifestFile
+     * @return void
+     */
+    public function addJsonManifest(string $name, string $jsonManifestFile) : void
+    {
+        $this->addPackage($name, new PathPackage('', new JsonManifestVersionStrategy($jsonManifestFile)));
     }
 
     /**
