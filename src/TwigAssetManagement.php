@@ -8,17 +8,17 @@
  */
 namespace LoveCoding\TwigAsset;
 
-use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use Symfony\Component\Asset\PackageInterface;
-use Symfony\Component\Asset\VersionStrategyInterface;
 use Symfony\Component\Asset\Package;
-use Symfony\Component\Asset\PathPackage;
-use Symfony\Component\Asset\UrlPackage;
 use Symfony\Component\Asset\Packages;
-use Symfony\Component\Asset\EmptyVersionStrategy;
-use Symfony\Component\Asset\StaticVersionStrategy;
-use Symfony\Component\Asset\JsonManifestVersionStrategy;
+use Twig\Extension\AbstractExtension;
+use Symfony\Component\Asset\UrlPackage;
+use Symfony\Component\Asset\PathPackage;
+use Symfony\Component\Asset\PackageInterface;
+use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
+use Symfony\Component\Asset\VersionStrategy\StaticVersionStrategy;
+use Symfony\Component\Asset\VersionStrategy\VersionStrategyInterface;
+use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
 
 class TwigAssetManagement
 {
